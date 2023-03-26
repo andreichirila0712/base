@@ -45,7 +45,7 @@
             <td>{{f.arrivalTime}}</td>
             <td>{{f.duration}}</td>
             <td>{{f.totalSeats}}</td>
-            <td>{{f.pilot.firstName}} {{f.pilot.lastName}}</td>
+            <td>{{f.pilotDTO.firstName}}</td>
             <td>
               <button (click)="handleDeleteFlight(f)" class="btn btn-danger">
                 <i class="bi-trash"></i>
@@ -73,7 +73,7 @@
           </tr>
           </tfoot>
         </table>
-        <ul class="nav-pills">
+        <ul class="nav-pills" style="display: flex; list-style: none;">
           <li *ngFor="let item of [].constructor(listCourses.totalPages); let page=index">
             <a [ngClass]="page==currentPage? 'btn-info': 'btn-outline-info'" (click)="gotoPage(page)"
                class="btn mb-1 ms-1 mt-1">{{page}}</a>
@@ -196,13 +196,13 @@
             <div class="form-group">
               <label class="text-muted">Pilot</label>
               <select class="form-select form-font rounded-0 mt-1 mb-3"
-                      [ngClass]="{'is-invalid' : submitted && courseFormGroup.controls['pilot'].errors}"
-                      formControlName="pilot">
+                      [ngClass]="{'is-invalid' : submitted && courseFormGroup.controls['pilotDTO'].errors}"
+                      formControlName="pilotDTO">
                 <option [ngValue]="null" disabled>Choose Pilot</option>
                 <option *ngFor="let i of listInstructors" [ngValue]="i">{{i.firstName}} {{i.lastName}}</option>
               </select>
-              <div *ngIf="submitted && courseFormGroup.controls['pilot'].errors" class="invalid-feedback">
-                <div *ngIf="courseFormGroup.controls['pilot'].errors['required']">Pilot is Required</div>
+              <div *ngIf="submitted && courseFormGroup.controls['pilotDTO'].errors" class="invalid-feedback">
+                <div *ngIf="courseFormGroup.controls['pilotDTO'].errors['required']">Pilot is Required</div>
               </div>
             </div>
           </div>
@@ -342,14 +342,14 @@
             <div class="form-group">
               <label class="text-muted">Pilot</label>
               <select class="form-select form-font rounded-0 mt-1 mb-3"
-                      [ngClass]="{'is-invalid' : submitted && updateCourseFormGroup.controls['pilot'].errors}"
-                      formControlName="pilot">
+                      [ngClass]="{'is-invalid' : submitted && updateCourseFormGroup.controls['pilotDTO'].errors}"
+                      formControlName="pilotDTO">
                 <option [defaultSelected]=true
                         [ngValue]="defaultInstructor">{{defaultInstructor.firstName}} {{defaultInstructor.lastName}}</option>
                 <option *ngFor="let i of listInstructors" [ngValue]="i">{{i.firstName}} {{i.lastName}}</option>
               </select>
-              <div *ngIf="submitted && updateCourseFormGroup.controls['pilot'].errors" class="invalid-feedback">
-                <div *ngIf="updateCourseFormGroup.controls['pilot'].errors['required']">Pilot is Required</div>
+              <div *ngIf="submitted && updateCourseFormGroup.controls['pilotDTO'].errors" class="invalid-feedback">
+                <div *ngIf="updateCourseFormGroup.controls['pilotDTO'].errors['required']">Pilot is Required</div>
               </div>
             </div>
           </div>

@@ -9,5 +9,5 @@ export interface Flight {
   arrivalTime: string;
   duration: string;
   totalSeats: number;
-  pilot: Pilot;
+  pilotDTO: Pilot;
 }

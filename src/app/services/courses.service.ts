@@ -21,7 +21,11 @@ export class CoursesService {
     return this.http.delete(environment.backendHost + "/flights/" + flightId);
   }
 
-  public saveFlight(flight: Flight): Observable<Flight> {
-    return this.http.post<Flight>(environment.backendHost + "/flights/", flight)
+  public saveFlight(flightDTO: Flight): Observable<Flight> {
+    return this.http.post<Flight>(environment.backendHost + "/flights/", flightDTO)
+  }
+
+  public updateFlight(flightDTO: Flight, flightId: number): Observable<Flight> {
+    return this.http.put<Flight>(environment.backendHost + "/flights/" + flightId, flightDTO)
   }
 }

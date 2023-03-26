@@ -43,7 +43,7 @@ export class CoursesComponent implements OnInit {
       arrivalTime: ["", Validators.required],
       duration: ["", Validators.required],
       totalSeats: ["", Validators.required],
-      pilot: [null, Validators.required]
+      pilotDTO: [null, Validators.required]
     })
     this.handleSearchFlights()
   }
@@ -64,6 +64,7 @@ export class CoursesComponent implements OnInit {
         return throwError(err);
       })
     )
+
   }
 
   gotoPage(page: number) {
@@ -129,15 +130,27 @@ export class CoursesComponent implements OnInit {
       arrivalTime: [f.arrivalTime, Validators.required],
       duration: [f.duration, Validators.required],
       totalSeats: [f.totalSeats, Validators.required],
-      pilot: [f.pilot, Validators.required],
+      pilotDTO: [f.pilotDTO, Validators.required],
     })
-    this.defaultInstructor = this.updateCourseFormGroup.controls['pilot'].value;
+    this.defaultInstructor = this.updateCourseFormGroup.controls['pilotDTO'].value;
     this.modalService.open(updateContent, {size: 'xl'})
 
 
   }
 
   onUpdateCourse(updateModal: any) {
+    this.submitted = true;
+    if (this.updateCourseFormGroup.invalid) return;
+    this.courseService.updateFlight(this.updateCourseFormGroup.value, this.updateCourseFormGroup.value.flightId).subscribe({
+      next: () => {
+        alert("success update flight");
+        this.handleSearchFlights();
+        this.submitted = false;
+        updateModal.close();
+      }, error: err => {
+        alert(err.message)
+      }
+    })
 
   }
 }

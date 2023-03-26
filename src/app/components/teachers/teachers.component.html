@@ -11,26 +11,55 @@
       </div>
     </div>
     <div class="box-content">
-      <table datatable class="table table-striped table-hover" id="example" style="width:100%">
-        <thead>
-        <tr>
-          <th>Pilot Id</th>
-          <th>Pilot First Name</th>
-          <th>Pilot Last Name</th>
-          <th>Pilot Summary</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <tfoot>
-        <tr>
-          <th>Pilot Id</th>
-          <th>Pilot First Name</th>
-          <th>Pilot Last Name</th>
-          <th>Pilot Summary</th>
-        </tr>
-        </tfoot>
-      </table>
+      <ng-container *ngIf="pagePilots | async as listPilots; else failureOrLoading">
+        <div *ngIf="searchFormGroup" class="mb2">
+          <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchPilots()">
+            <div class="input-group w-25">
+              <input type="search" formControlName="keyword" class="form-control rounded mx-2" placeholder="Search"
+                     aria-label="Search">
+              <button type="submit" class="btn btn-outline-primary">Search</button>
+            </div>
+          </form>
+        </div>
+        <table class="table table-striped table-hover" id="example" style="width:100%">
+          <thead>
+          <tr>
+            <th>Pilot Id</th>
+            <th>Pilot First Name</th>
+            <th>Pilot Last Name</th>
+            <th>Pilot Summary</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of listPilots.content">
+            <td>{{p.pilotId}}</td>
+            <td>{{p.firstName}}</td>
+            <td>{{p.lastName}}</td>
+            <td>{{p.summary}}</td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th>Pilot Id</th>
+            <th>Pilot First Name</th>
+            <th>Pilot Last Name</th>
+            <th>Pilot Summary</th>
+          </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+      <ng-template #failureOrLoading>
+        <ng-container *ngIf="errorMessage; else loading">
+          <div class="text-danger">
+            {{errorMessage}}
+          </div>
+        </ng-container>
+        <ng-template #loading>
+          <div class="loader shadow-sm text-muted">
+            <span><i class="fa-solid fa-rotate fa-spin"></i></span> &nbsp; <span>Processing...</span>
+          </div>
+        </ng-template>
+      </ng-template>
     </div>
   </div>
 </div>
